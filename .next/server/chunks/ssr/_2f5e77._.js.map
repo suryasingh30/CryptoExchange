@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://E%3A/jsHarkirat-1-main/CryptoExchange/app/trade/%5Bmarket%5D/page.tsx"],"sourcesContent":["import { useParams } from \"next/navigation\"\r\n\r\nexport default function Page(){\r\n\r\n    const {market} = useParams();\r\n\r\n    return <div className=\"flex flex-roow flex-1\">\r\n        <div className=\"flex flex-col flex-1\">\r\n            \r\n        </div>\r\n    </div>\r\n\r\n}"],"names":[],"mappings":";;;;AAAA;AAAA;;;AAEe,SAAS;IAEpB,MAAM,EAAC,MAAM,EAAC,GAAG,CAAA,GAAA,qLAAA,CAAA,YAAS,AAAD;IAEzB,qBAAO,8OAAC;QAAI,WAAU;kBAClB,cAAA,8OAAC;YAAI,WAAU;;;;;;;;;;;AAKvB"}},
+    {"offset": {"line": 32, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 43, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
+    {"offset": {"line": 43, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
