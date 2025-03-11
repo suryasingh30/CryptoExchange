@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDepth, getKlines, getTicker, getTrades } from "@/frontend/app/utils/httpClients";
+import { getDepth, getKlines, getTicker, getTrades } from "../../../../frontend/app/utils/httpClients";
 import { BidTable } from "./BidTable";
 import { AskTable } from "./AskTable";
 

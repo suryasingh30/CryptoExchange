@@ -1,5 +1,5 @@
 import fs from "fs";
-import { RedisManager } from "../../../api/src/RedisManager";
+import { RedisManager } from "../RedisManager";
 import {ORDER_UPDATE, TRADE_ADDED} from "../types/index";
 import { CANCEL_ORDER, CREATE_ORDER, GET_DEPTH, GET_OPEN_ORDERS, MessageFromApi, ON_RAMP } from "../types/fromApi";
 import {Fill, Order, Orderbook} from "./Orderbook";
@@ -18,7 +18,7 @@ export class Engine {
     private balance: Map<string,UserBalance> = new Map();
 
     constructor(){
-        let snapshot = null;
+        let snapshot = null
         try {
             if (process.env.WITH_SNAPSHOT) {
                 snapshot = fs.readFileSync("./snapshot.json");
@@ -53,6 +53,14 @@ export class Engine {
             case CREATE_ORDER:
                 try {
                     const {executedQty, fills, orderId} = this.createOrder(message.data.market, message.data.price, message.data.quantity, message.data.side, message.data.userId);
+                    RedisManager.getInstance().sendToApi(clientId, {
+                        type: "ORDER_PLACED",
+                        payload: {
+                            orderId,
+                            executedQty,
+                            fills
+                        }
+                    })
                 }
         }
     }
