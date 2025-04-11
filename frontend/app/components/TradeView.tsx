@@ -41,8 +41,7 @@ export function TradeView({market,}:{market: string;}){
 
     return (
         <>
-            <div ref={chartRef} style={{height: "520px", width: "100%", marginTop: 4}}>
-            </div>
+            <div ref={chartRef} style={{height: "520px", width: "100%", marginTop: 4}}></div>
         </>
     );
 };

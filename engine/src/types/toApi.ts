@@ -10,12 +10,12 @@ export type MessageToApi = {
     type: "DEPTH",
     payload: {
         bids: [string, string][],
-        asks: [string, string][]
+        asks: [string, string][],
     }
 } | {
     type: "ORDER_PLACED",
     payload: {
-        orderIf: string,
+        orderId: string,
         executedQty: number,
         fills: {
             price: string,

@@ -1,0 +1,6 @@
+{
+  "/markets/page": "app/markets/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/trade/[market]/page": "app/trade/[market]/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
+}

@@ -208,7 +208,7 @@ export class Orderbook {
         }
     }
 
-    canceelAsk(order: Order){
+    cancelAsk(order: Order){
         const index = this.asks.findIndex(x => x.orderId === order.orderId);
         if(index != -1)
         {

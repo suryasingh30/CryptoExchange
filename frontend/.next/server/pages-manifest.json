@@ -1,0 +1,6 @@
+{
+  "/api/tickers": "pages/api/tickers.js",
+  "/api/klines": "pages/api/klines.js",
+  "/api/depth": "pages/api/depth.js",
+  "/api/trades": "pages/api/trades.js"
+}

@@ -12,14 +12,15 @@ type DbMessage = {
         isBuyerMaker: string,
         price: string,
         quantity: string,
-        timestamp: string,
-        market: string
+        timestamp: Number,
+        market: string,
+        quoteQuantity: string
     }
 } | {
     type: typeof ORDER_UPDATE,
     data: {
         orderId: string,
-        executedQty: string,
+        executedQty: number,
         market ?: string,
         price ?: string,
         quantity ?: string,
@@ -46,7 +47,7 @@ export class RedisManager {
     public pushMessage(message: DbMessage){
         this.client.lPush("db_processor", JSON.stringify(message));
     }
-
+ 
     public publishMessage(channel: string, message: WsMessage){
         this.client.publish(channel, JSON.stringify(message));
     }

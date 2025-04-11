@@ -1,0 +1,3 @@
+{
+  "/api/tickers": "pages/api/tickers.js"
+}

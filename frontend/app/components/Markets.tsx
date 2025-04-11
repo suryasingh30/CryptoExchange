@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import {Ticker} from "../utils/types";
 import { getTickers } from "../utils/httpClients";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export const Markets = () => {
     const [tickers, setTickers] = useState<Ticker[]>();
@@ -13,37 +13,51 @@ export const Markets = () => {
     }, []);
 
     return (
-        <div className="">
-            <div className="">
-                <div className="">
-                    <table className="">
+        <div className="flex flex-col flex-1 max-w-[1280px] w-full">
+            <div className="flex flex-col min-w-[720px] flex-1 w-full">
+                <div className="flex flex-col w-full rounded-lg bg-baseBackgroundL1 px-5 py-3">
+                    <table className="w-full table-auto">
                         <MarketHeader/>
-                        {tickers?.map((m) => <MarketRow market={m}/>)}
+                        {tickers?.map((m) => (
+                            <MarketRow key={m.symbol} market={m} />
+                            ))}
                     </table>
                 </div>
             </div>
-        </div>  
+        </div>
     );
 };
 
 function MarketRow({market} : {market: Ticker}){
     const router = useRouter();
     return (
-        <tr>
-            <td>
-                <div>
-                    <div>
-                        <div>
-                            <div>
-                                <img/>
+        <tr className="cursor-pointer border-t border-baseBorderLight hover:bg-white/7 w-full" onClick={() => router.push(`/trade/${market.symbol}`)}>
+            <td className="px-1 py-3">
+                <div className="flex shrink">
+                    <div className="flex items-center undefined">
+                        <div
+                            className="relative flex-node overflow-hidden rounded-full border border-baseBorderMed"
+                            style={{width: "40px", height: "40px"}}
+                        >
+                            <div className="relative">
+                                <img
+                                    alt={market.symbol}
+                                    src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVvBqZC_Q1TSYObZaMvK0DRFeHZDUtVMh08Q&s"}
+                                    // loading="laxy"
+                                    width="40"
+                                    height="40"
+                                    decoding="async"
+                                    data-nimg="1"
+                                    className=""
+                                />
                             </div>
                         </div>
-                        <div>
-                            <p>
+                        <div className="ml-4 flex flex-col">
+                            <p className="whitespace-nowrap text-base font-medium text-baseTextHighEmphasis">
                                 {market.symbol}
                             </p>
-                            <div>
-                                <p>
+                            <div className="flex items-center justify-start flex-row gap-2">
+                                <p className="flex-medium text-left text-xs leading-5 text-baseTextMedEmphasis">
                                     {market.symbol}
                                 </p>
                             </div>
@@ -51,17 +65,19 @@ function MarketRow({market} : {market: Ticker}){
                     </div>
                 </div>
             </td>
-            <td>
-                <p>{market.lastPrice}</p>
+            <td className="px-1 py-3">
+                <p className="text-base font-medium tabular-nums">{market.lastPrice}</p>
             </td>
-            <td>
-                <p>{market.high}</p>
+            <td className="px-1 py-3">
+                <p className="text-base font-medium tabular-nums">{market.high}</p>
             </td>
-            <td>
-                <p>{market.volume}</p>
+            <td className="px-1 py-3">
+                <p className="text-base font-medium tabular-nums">{market.volume}</p>
             </td>
-            <td>
-                <p>{Number(market.priceChangePercent)?.toFixed(3)}%</p>
+            <td className="px-1 py-3">
+                <p className="text-base font-medium tabular-nums text-green-400">
+                    {Number(market.priceChangePercent)?.toFixed(3)} %
+                </p>
             </td>
         </tr>
     );
@@ -70,34 +86,45 @@ function MarketRow({market} : {market: Ticker}){
 function MarketHeader(){
     return (
         <thead>
-            <tr>
-                <th>
-                    <div>
-                        Name<span></span>
+            <tr className="">
+                <th className="px-2 py-3 text-left text-xl font-normal text-baseTextMedEmphasis">
+                    <div className="flex items-center gap-1 cursor-pointer select-none">
+                        Name<span className="w-[16px]"></span>
                     </div>
                 </th>
-                <th>
-                    <div>
-                        Price<span></span>
+                <th className="px-2 py-3 text-left text-xl font-normal text-baseTextMedEmphasis">
+                    <div className="flex items-center gap-1 cursor-pointer select-none">
+                        Price<span className="w-[16px]"></span>
                     </div>
                 </th>
-                <th>
-                    <div>
-                        Market Cap<span></span>
+                <th className="px-2 py-3 text-left text-xl font-normal text-baseTextMedEmphasis">
+                    <div className="flex items-center gap-1 cursor-pointer select-none">
+                        Market Cap<span className="w-[16px]"></span>
                     </div>
                 </th>
-                <th>
-                    <div>
+                <th className="px-2 py-3 text-xl font-normal text-baseTextMedEmphasis">
+                    <div className="flex items-center gap-1 cursor-pointer select-none">
                         24th Volume
-                        <svg>
-                            <path></path>
-                            <path></path>
-                        </svg>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            className="lucide lucide-arrow-down h-4 w-4"
+                        >
+                        <path d="M12 5v14"></path>
+                        <path d="m19 12-7 7-7-7"></path>
+                    </svg>
                     </div>
                 </th>
-                <th>
-                    <div>
-                        24th Change<span></span>
+                <th className="px-2 py-3 text-left text-xl font-normal text-baseTextMedEmphasis">
+                    <div className="flex items-center gap-1 cursor-pointer select-none">
+                        24th Change<span className="w-[16px]"></span>
                     </div>
                 </th>
             </tr>

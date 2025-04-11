@@ -6,7 +6,7 @@ export const BidTable = ({bids}: {bids: [string, string][]}) => {
 
     return <div>
         {bidsWithTotal.map(([price, quantity, total]) => <Bid
-            price={price} quantity={quantity} total={total} maxTotal={maxTotal}
+            price={price} quantity={quantity} total={total} maxTotal={maxTotal} key={`${price}-${quantity}`}
         >
         </Bid>) }
     </div>

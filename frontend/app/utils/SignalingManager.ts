@@ -1,46 +1,46 @@
 import {Ticker} from "./types";
 
 export const BASE_URL = "wss://ws.backpack.exchange/"
+// export const BASE_URL = "ws://localhost:3001"
 
 export class SignalingManager{
     private ws: WebSocket;
     private static instance: SignalingManager;
-    private bufferedMessages: any[] = [];
+    private bufferedMessage: any[] = [];
     private callbacks: any = {};
     private id: number;
-    private initialized: boolean = false;
+    private  initialized: boolean = false;
 
     private constructor(){
         this.ws = new WebSocket(BASE_URL);
-        this.bufferedMessages = [];
+        this.bufferedMessage = [];
         this.id = 1;
         this.init();
     }
 
     public static getInstance(){
         if(!this.instance)
-        {
-            this.instance = new SignalingManager();
-        }
-        return this.instance;
-    }
+            this.instance  = new SignalingManager();
 
+    return this.instance;
+    }
+    
     init(){
         this.ws.onopen = () => {
             this.initialized = true;
-            this.bufferedMessages.forEach(message => {
+            this.bufferedMessage.forEach(message => {
                 this.ws.send(JSON.stringify(message));
             });
-            this.bufferedMessages = [];
+            this.bufferedMessage = [];
         }
+
         this.ws.onmessage = (event) => {
             const message = JSON.parse(event.data);
             const type = message.data.e;
-            if(this.callbacks[type])
-            {
-                this.callbacks[type].forEach(({callback}: {callback: any}) => {
-                    if(type == "ticker")
-                    {
+
+            if(this.callbacks[type]){
+                this.callbacks[type].forEach(({callback}) => {
+                    if(type === "ticker"){
                         const newTicker: Partial<Ticker> = {
                             lastPrice: message.data.c,
                             high: message.data.h,
@@ -49,10 +49,11 @@ export class SignalingManager{
                             quoteVolume: message.data.V,
                             symbol: message.data.s,
                         }
+                        console.log(newTicker);
                         callback(newTicker);
                     }
-                    if(type === "depth")
-                    {
+
+                    if(type === "depth"){
                         const updateBids = message.data.b;
                         const updateAsks = message.data.a;
                         callback({bids: updateBids, asks: updateAsks});
@@ -68,7 +69,7 @@ export class SignalingManager{
             id: this.id++
         }
         if(!this.initialized){
-            this.bufferedMessages.push(messageToSend);
+            this.bufferedMessage.push(messageToSend);
             return;
         }
         this.ws.send(JSON.stringify(messageToSend));
@@ -81,10 +82,9 @@ export class SignalingManager{
 
     async deRegisterCallback(type: string, id: string){
         if(this.callbacks[type]){
-            const index = this.callbacks[type].findIndex((callback:any) => callback.id === id);
+            const index = this.callbacks[type].findIndex(callback => callback.id === id);
             if(index !== -1)
                 this.callbacks[type].splice(index, 1);
         }
     }
-    
 }
